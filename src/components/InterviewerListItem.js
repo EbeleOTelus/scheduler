@@ -10,11 +10,7 @@ const InterviewerListItem = (props) => {
 
   
 
-  // const SelectedInterviewer = () => {
-  //   if (props.selected) {
-  //     return props.name;
-  //   }
-  // }
+  
     return (
     <li className={interviewerClass} onClick={props.setInterviewer}>
         <img

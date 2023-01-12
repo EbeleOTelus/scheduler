@@ -1,4 +1,5 @@
 import React from "react";
+import Error from "components/Appointment/Error.js"
 import Status from "components/Appointment/Status.js"
 import Confirm from "components/Appointment/Confirm.js"
 import Show from "components/Appointment/Show.js"
@@ -159,5 +160,9 @@ storiesOf("Appointment", module)
   onCancel={action("onCancel")}
   />)
   .add("Status", () => <Status message="Deleting"/>)
+  .add("Error", () => <Error
+  message="Could not delete appointment."
+  onClose={action("onClose")}
+  />)
 
   

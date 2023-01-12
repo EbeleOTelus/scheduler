@@ -1,4 +1,5 @@
 import React from "react";
+import Status from "components/Appointment/Status.js"
 import Confirm from "components/Appointment/Confirm.js"
 import Show from "components/Appointment/Show.js"
 import Empty from "components/Appointment/Empty.js";
@@ -157,5 +158,6 @@ storiesOf("Appointment", module)
   onConfirm={action("onConfirm")}
   onCancel={action("onCancel")}
   />)
+  .add("Status", () => <Status message="Deleting"/>)
 
   

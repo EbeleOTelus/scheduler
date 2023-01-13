@@ -3,8 +3,8 @@ import DayList from "./DayList";
 import "components/Application.scss";
 import { useState, useEffect } from "react";
 import Appointment from "./Appointment";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 import axios from "axios";
-import { getAppointmentsForDay } from "helpers/selectors";
 
 
 
@@ -18,30 +18,36 @@ export default function Application(props) {
     appointments: {}
   });
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-
-  // const setDays = days => setState(prev => ({ ...prev, days }));;
+  
+  
   const setDay = day => setState(prev => ({ ...prev, day }));
-
-
-
+  
+  
+  
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
+      axios.get("/api/interviewers")
     ]).then((all) => {
-      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data }));
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers:all[2].data }));
       console.log(all);
     });
-
+    
   }, []);
-
+  
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const appointmentValue = dailyAppointments.map((appointment) => {
+
+    const interview = getInterview(state, appointment.interview);
+
     return (
       <Appointment
         key={appointment.id}
-        {...appointment}
+        id={appointment.id}
+      time={appointment.time}
+      interview={interview}
 
 
       />
@@ -62,7 +68,8 @@ export default function Application(props) {
           <DayList
             days={state.days}
             value={state.day}
-            onChange={setDay} />
+            onChange={setDay} 
+            />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"

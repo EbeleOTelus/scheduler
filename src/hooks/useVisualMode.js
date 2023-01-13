@@ -27,6 +27,3 @@ export default function useVisualMode(initial) {
 }
 
 
-// const plants = ['broccoli', 'cauliflower', 'cabbage', 'kale', 'tomato']
-// const previousItemIndex = history.length-1
-// setMode(history[history.length-1])

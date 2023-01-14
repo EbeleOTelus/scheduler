@@ -1,7 +1,6 @@
 
 export function getAppointmentsForDay(state, day) {
-  //... returns an array of appointments for that day
-  // eslint-disable-next-line array-callback-return
+  
   let Array = [];
   state.days.forEach(daysPick => {
     if (daysPick.name === day) {
@@ -14,17 +13,31 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-   let interviewObject = {}
+  let interviewObject = {};
 
-   if (!interview){
-     return null;
-    }
-    
-    interviewObject = {
-      student: interview.student,
-      interviewer: state.interviewers[interview.interviewer]
+  if (!interview) {
+    return null;
   }
-return interviewObject
-   }
-  
 
+  interviewObject = {
+    student: interview.student,
+    interviewer: state.interviewers[interview.interviewer]
+  };
+  return interviewObject;
+}
+
+
+export function getInterviewersForDay(state, day) {
+  
+  let InterviewerArray = [];
+ 
+    state.days.forEach(daysPick => {
+      if (daysPick.name === day) {
+        for (let appointmentid of daysPick.appointments) {
+          InterviewerArray.push(state.interviewers[appointmentid]);
+        }
+      }
+    });
+   
+  return InterviewerArray;
+}

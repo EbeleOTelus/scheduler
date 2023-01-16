@@ -44,6 +44,28 @@ export default function Application(props) {
 
     const interviewers = getInterviewersForDay(state, state.day);
 
+    const bookInterview = (id, interview) => {
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+        
+      };
+
+      setState({
+        ...state,
+        appointments
+      });
+
+      console.log(id, interview);
+    };
+
+
+
+
     return (
       <Appointment
         key={appointment.id}
@@ -51,7 +73,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
-
+        bookInterview={bookInterview}
       />
     );
 
@@ -71,6 +93,7 @@ export default function Application(props) {
             days={state.days}
             value={state.day}
             onChange={setDay}
+
           />
         </nav>
         <img
@@ -81,7 +104,8 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {appointmentValue}
-        <Appointment key="last" time="5pm" />
+        <Appointment key="last" time="5pm"
+        />
         {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
       </section>
     </main>

@@ -4,7 +4,7 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
-import useVisualMode  from "hooks/useVisualMode";
+import useVisualMode from "hooks/useVisualMode";
 
 
 
@@ -16,6 +16,15 @@ const Appointment = (props) => {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  const save = (name, interviewer) => {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    props.bookInterview(props.id, interview)
+    transition(SHOW);
+  };
 
   return (
     <article className="appointment">
@@ -29,9 +38,10 @@ const Appointment = (props) => {
       )}
       {mode === CREATE &&
         <Form
-         
+          name={props.name}
           value={props.value}
           interviewers={props.interviewers}
+          onSave={save}
           onCancel={back}
         />
       }

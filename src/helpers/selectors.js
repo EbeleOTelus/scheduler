@@ -33,8 +33,8 @@ export function getInterviewersForDay(state, day) {
  
     state.days.forEach(daysPick => {
       if (daysPick.name === day) {
-        for (let appointmentid of daysPick.appointments) {
-          InterviewerArray.push(state.interviewers[appointmentid]);
+        for (let interviewerid of daysPick.interviewers) {
+          InterviewerArray.push(state.interviewers[interviewerid]);
         }
       }
     });

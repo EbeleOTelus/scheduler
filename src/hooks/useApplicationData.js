@@ -1,7 +1,7 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect } from "react";
 import axios from "axios";
 
- const useApplicationData = () => {
+const useApplicationData = () => {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -22,6 +22,9 @@ import axios from "axios";
 
   }, []);
 
+
+
+
   const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
@@ -33,13 +36,25 @@ import axios from "axios";
 
     };
 
+    const dayFinder = state.days.find((day) => day.appointments.includes(id));
+    const days = state.days.map((day, index) => {
+      if (day.name === dayFinder.name && state.appointments[id].interview === null) {
+        return { ...day, spots: day.spots - 1 };
+      } else {
+        return day;
+      }
+    });
+
+
+
     console.log(id, interview);
 
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((response) => {
         setState({
           ...state,
-          appointments
+          appointments,
+          days
         });
 
       });
@@ -58,18 +73,32 @@ import axios from "axios";
       [id]: appointment
     };
 
+    const dayFinder = state.days.find((day) => day.appointments.includes(id));
+    const days = state.days.map((day, index) => {
+      if (day.name === dayFinder.name && state.appointments[id].interview === null) {
+        return { ...day, spots: day.spots + 1 };
+      } else {
+        return day;
+      }
+    });
+
+
+
+
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         setState({
           ...state,
-          appointments
+          appointments,
+          days
+
         });
       });
   };
 
-return  { state, setDay, bookInterview, cancelInterview };
-}
+  return { state, setDay, bookInterview, cancelInterview };
+};
 
 
 
-export default useApplicationData
+export default useApplicationData;

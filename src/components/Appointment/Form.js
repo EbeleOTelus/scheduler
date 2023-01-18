@@ -1,7 +1,7 @@
 import React from "react"
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 const Form = (props) => {
@@ -12,6 +12,7 @@ const Form = (props) => {
 
   const handleChange= (event) => {
     setStudent(event.target.value)
+   
   }
 
   const reset = () => {
@@ -36,6 +37,10 @@ const Form = (props) => {
   
     props.onSave(student, interviewer);
   }
+
+  useEffect(() => {
+setError("")
+  }, [interviewer, student])
 
   return (
     <main className="appointment__card appointment__card--create">

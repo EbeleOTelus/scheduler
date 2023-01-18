@@ -2,13 +2,14 @@
 export function getAppointmentsForDay(state, day) {
   
   let Array = [];
-  state.days.forEach(daysPick => {
-    if (daysPick.name === day) {
-      for (let appointmentid of daysPick.appointments) {
-        Array.push(state.appointments[appointmentid]);
+  for (let element of state.days) {
+    if (day === element.name) {
+      for (let id of element.appointments) {
+        if (id === state.appointments[id].id)
+          Array.push(state.appointments[id]);
       }
     }
-  });
+  }
   return Array;
 }
 
@@ -29,15 +30,26 @@ export function getInterview(state, interview) {
 
 export function getInterviewersForDay(state, day) {
   
-  let InterviewerArray = [];
- 
-    state.days.forEach(daysPick => {
-      if (daysPick.name === day) {
-        for (let interviewerid of daysPick.interviewers) {
-          InterviewerArray.push(state.interviewers[interviewerid]);
-        }
-      }
-    });
-   
-  return InterviewerArray;
+  const foundDay = state.days.find(d => day === d.name);
+  if (state.days.length === 0 || foundDay === undefined) {
+    return [];
+  }
+  return foundDay.interviewers.map((id) => state.interviewers[id]);
 }
+
+
+
+
+  // console.log("state is here", state.days)
+//   let Array = [];
+//   for (let element of state.days) {
+//     if (day === element.name) {
+//       for (let id in element.interviewers) {
+//         console.log("state.interviewers", state.interviewers)
+//       if (id === state.interviewers[id].id)
+//           Array.push(state.interviewers[id]);
+//       }
+//     }
+//   }
+//   return Array;
+// }

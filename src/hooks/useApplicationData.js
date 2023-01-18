@@ -73,9 +73,15 @@ const useApplicationData = () => {
       [id]: appointment
     };
 
+
+
+
+
     const dayFinder = state.days.find((day) => day.appointments.includes(id));
-    const days = state.days.map((day, index) => {
-      if (day.name === dayFinder.name && state.appointments[id].interview === null) {
+    const newDays = (prev) => prev.days.map((day, index) => {
+      
+      if (day.id === dayFinder.id) {
+        
         return { ...day, spots: day.spots + 1 };
       } else {
         return day;
@@ -87,12 +93,21 @@ const useApplicationData = () => {
 
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
-        setState({
-          ...state,
-          appointments,
-          days
 
-        });
+        setState((prev) => {
+          const days = newDays(prev)
+          return {
+            ...prev,
+            appointments,
+            days
+          }
+        })
+
+        // setState((prev) => {
+        //   ...prev,
+        //   appointments,
+        //   days(prev)
+        // });
       });
   };
 

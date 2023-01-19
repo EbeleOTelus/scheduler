@@ -12,7 +12,6 @@ const Empty = (props) => {
   />
 </main>
   )
-
 }
 
 

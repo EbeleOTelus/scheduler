@@ -4,8 +4,6 @@ import InterviewerListItem from "./InterviewerListItem";
 
 const InterviewerList = (props) => {
 
-
-
   const listAvatar = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem
